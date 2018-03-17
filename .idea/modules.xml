@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/SpotifyApp.iml" filepath="$PROJECT_DIR$/SpotifyApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Sophia\Documents\CS492\Final Project\final-project-team-17-spotify\app\app.iml" filepath="C:\Users\Sophia\Documents\CS492\Final Project\final-project-team-17-spotify\app\app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/final-project-team-17-spotify.iml" filepath="$PROJECT_DIR$/final-project-team-17-spotify.iml" />
-      <module fileurl="file://C:\Users\Sophia\Documents\CS492\Final Project\final-project-team-17-spotify\master-assignment-4.iml" filepath="C:\Users\Sophia\Documents\CS492\Final Project\final-project-team-17-spotify\master-assignment-4.iml" />
     </modules>
   </component>
 </project>
