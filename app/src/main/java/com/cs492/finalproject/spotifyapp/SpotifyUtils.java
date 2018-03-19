@@ -24,6 +24,7 @@ public class SpotifyUtils {
     }
 
     public static class CategoryItem implements Serializable {
+        public static final String EXTRA_CATEGORY_ITEM = "com.cs492.finalproject.spotifyapp";
         public String name;
         public String ID;
         public String imageURL;

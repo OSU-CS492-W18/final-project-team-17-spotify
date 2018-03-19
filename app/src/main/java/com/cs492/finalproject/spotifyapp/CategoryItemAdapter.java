@@ -1,10 +1,12 @@
 package com.cs492.finalproject.spotifyapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -61,6 +63,17 @@ public class CategoryItemAdapter extends BaseAdapter {
                 .fitCenter()
                 .load(categoryItem.imageURL);
         nameTextView.setText(categoryItem.name);
+
+        ImageButton imageButton = (ImageButton)convertView.findViewById(R.id.imageButton);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, PlaylistActivity.class);
+                intent.putExtra(SpotifyUtils.CategoryItem.EXTRA_CATEGORY_ITEM, categoryItem.ID);
+                mContext.startActivity(intent);
+            }
+        });
+
 
         return convertView;
     }
