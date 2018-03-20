@@ -16,9 +16,11 @@ import java.util.ArrayList;
 
 public class SpotifyUtils {
     private final static String SPOTIFY_BASE_URL = "https://api.spotify.com";
+    private final static String CATEGORY_URL = "/v1/browse/categories/";
+    private final static String PLAYLIST_URL = "/playlists";
 
     public static String buildCategoryUrl() {
-        return Uri.parse(SPOTIFY_BASE_URL + "/v1/browse/categories").buildUpon()
+        return Uri.parse(SPOTIFY_BASE_URL + CATEGORY_URL).buildUpon()
                 .build()
                 .toString();
     }
@@ -54,4 +56,43 @@ public class SpotifyUtils {
             return null;
         }
     }
+
+    public static String buildPlaylistsUrl(String categoryID) {
+        return Uri.parse(SPOTIFY_BASE_URL + CATEGORY_URL +  categoryID + PLAYLIST_URL).buildUpon()
+                .build()
+                .toString();
+    }
+
+    public static class PlaylistItem implements  Serializable {
+      public static final String EXTRA_PLAYLIST_ITEM = "com.cs492.finalproject.spotifyapp";
+      public String name;
+      public String ID;
+      public String imageURL;
+    }
+
+    public static ArrayList<PlaylistItem> parsePlaylistJSON(String playlistJSON) {
+        try {
+            JSONObject playlistObj = new JSONObject(playlistJSON);
+            JSONArray playlistList = playlistObj.getJSONObject("playlists").getJSONArray("items");
+
+            ArrayList<PlaylistItem> playlistItemsList = new ArrayList<>();
+            for (int i = 0; i < playlistList.length(); i++) {
+                PlaylistItem playlistItem = new PlaylistItem();
+                JSONObject playlistListElem = playlistList.getJSONObject(i);
+
+                playlistItem.name = playlistListElem.getString("name");
+                playlistItem.ID = playlistListElem.getString("id");
+                playlistItem.imageURL = playlistListElem.getJSONArray("images").getJSONObject(0).getString("url");
+                playlistItemsList.add(playlistItem);
+            }
+            return playlistItemsList;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
