@@ -9,7 +9,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageButton;
 
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -27,7 +29,6 @@ import java.util.ArrayList;
 public class MainActivity extends Activity implements
         SpotifyPlayer.NotificationCallback, ConnectionStateCallback, LoaderManager.LoaderCallbacks<String>
 {
-
     // TODO: Replace with your client ID
     private static final String CLIENT_ID = "17fbced129bb41e7a78b0b58312905e1";
     // TODO: Replace with your redirect URI
@@ -39,19 +40,12 @@ public class MainActivity extends Activity implements
 
     private Player mPlayer;
     private CategoryItemAdapter mCategoryItemAdapter;
+    private String mToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-       /* gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                Toast.makeText(MainActivity.this, "" + position,
-                        Toast.LENGTH_SHORT).show(); */
 
         AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,
                 AuthenticationResponse.Type.TOKEN,
@@ -80,8 +74,9 @@ public class MainActivity extends Activity implements
         if (requestCode == REQUEST_CODE) {
             AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, intent);
             if (response.getType() == AuthenticationResponse.Type.TOKEN) {
-                Config playerConfig = new Config(this, response.getAccessToken(), CLIENT_ID);
-                loadCategories(response.getAccessToken(), true);
+                mToken = response.getAccessToken();
+                Config playerConfig = new Config(this, mToken, CLIENT_ID);
+                loadCategories(mToken, true);
                 Spotify.getPlayer(playerConfig, this, new SpotifyPlayer.InitializationObserver() {
                     @Override
                     public void onInitialized(SpotifyPlayer spotifyPlayer) {
@@ -174,7 +169,7 @@ public class MainActivity extends Activity implements
         if (data != null) {
             ArrayList<SpotifyUtils.CategoryItem> categoryItems = SpotifyUtils.parseCategoryJSON(data);
             GridView gridView = findViewById(R.id.gridview);
-            mCategoryItemAdapter = new CategoryItemAdapter(this, categoryItems);
+            mCategoryItemAdapter = new CategoryItemAdapter(this, categoryItems, mToken);
             gridView.setAdapter(mCategoryItemAdapter);
             Log.d("MainActivity", "Load finished!");
         }
