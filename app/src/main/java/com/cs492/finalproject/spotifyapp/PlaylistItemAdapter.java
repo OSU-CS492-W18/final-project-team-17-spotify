@@ -67,8 +67,8 @@ public class PlaylistItemAdapter extends RecyclerView.Adapter<PlaylistItemAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String playlistID = mPlaylistItems.get(getAdapterPosition()).ID;
-                    mOnPlaylistItemClickListener.onPlaylistItemClick(playlistID);
+                    String tracksURL = mPlaylistItems.get(getAdapterPosition()).tracksURL;
+                    mOnPlaylistItemClickListener.onPlaylistItemClick(tracksURL);
                     //get tracks in playlist
 
                 }

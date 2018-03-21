@@ -16,10 +16,12 @@ public class SpotifyTrackTask extends AsyncTaskLoader<String>{
 
     private String mCachedData;
     private String mToken;
+    private String mTrackURL;
 
-    public SpotifyTrackTask(Context context, String token) {
+    public SpotifyTrackTask(Context context, String token, String trackURL) {
         super(context);
         mToken = token;
+        mTrackURL = trackURL;
     }
 
     @Override
@@ -39,7 +41,7 @@ public class SpotifyTrackTask extends AsyncTaskLoader<String>{
         String trackJSON = null;
         Log.d(TAG, "Loading track data");
         try {
-            trackJSON = NetworkUtils.doHTTPGet(SpotifyUtils.buildTrackUrl(mTrackID), mToken);
+            trackJSON = NetworkUtils.doHTTPGet(SpotifyUtils.buildTrackUrl(mTrackURL), mToken);
         } catch (IOException e) {
             e.printStackTrace();
         }

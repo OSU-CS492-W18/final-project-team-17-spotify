@@ -18,7 +18,6 @@ public class SpotifyUtils {
     private final static String SPOTIFY_BASE_URL = "https://api.spotify.com";
     private final static String CATEGORY_URL = "/v1/browse/categories/";
     private final static String PLAYLIST_URL = "/playlists";
-    private final static String TRACK_URL = "/tracks";
 
     public static String buildCategoryUrl() {
         return Uri.parse(SPOTIFY_BASE_URL + CATEGORY_URL).buildUpon()
@@ -65,7 +64,7 @@ public class SpotifyUtils {
     }
 
     public static class PlaylistItem implements  Serializable {
-      //public static final String EXTRA_PLAYLIST_ITEM = "com.cs492.finalproject.spotifyapp";
+      public static final String EXTRA_PLAYLIST_ITEM = "com.cs492.finalproject.spotifyapp";
       public String name;
       public String ID;
       public String imageURL;
@@ -98,8 +97,8 @@ public class SpotifyUtils {
         }
     }
 
-    public static String buildTrackUrl(String categoryID) {
-        return Uri.parse(SPOTIFY_BASE_URL + CATEGORY_URL +  categoryID + PLAYLIST_URL).buildUpon()
+    public static String buildTrackUrl(String url) {
+        return Uri.parse(url).buildUpon()
                 .build()
                 .toString();
     }
@@ -114,16 +113,13 @@ public class SpotifyUtils {
     public static ArrayList<TrackItem> parseTrackJSON(String trackJSON) {
         try {
             JSONObject trackObj = new JSONObject(trackJSON);
-            JSONArray trackList = trackObj.getJSONObject("track").getJSONArray("items");
+            JSONArray trackList = trackObj.getJSONArray("items");
 
             ArrayList<TrackItem> trackItemsList = new ArrayList<TrackItem>();
             for (int i = 0; i < trackList.length(); i++) {
                 TrackItem trackItem = new TrackItem();
                 JSONObject trackListElem = trackList.getJSONObject(i);
-
-                trackItem.name = trackListElem.getString("name");
-                trackItem.ID = trackListElem.getString("id");
-                trackItem.imageURL = trackListElem.getJSONArray("icons").getJSONObject(0).getString("url");
+                trackItem.name = trackListElem.getJSONObject("track").getString("name");
                 trackItemsList.add(trackItem);
             }
             return trackItemsList;
@@ -135,7 +131,4 @@ public class SpotifyUtils {
             return null;
         }
     }
-
-
-
 }

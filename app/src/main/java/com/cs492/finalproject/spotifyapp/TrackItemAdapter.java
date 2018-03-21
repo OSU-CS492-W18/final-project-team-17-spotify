@@ -23,7 +23,7 @@ public class TrackItemAdapter extends RecyclerView.Adapter<TrackItemAdapter.Trac
         mOnTrackItemClickListener = onTrackItemClickListener;
     }
 
-    public void updateTrackData(ArrayList<SpotifyUtils.TrackItem> items, ArrayList<SpotifyUtils.TrackItem> trackItems) {
+    public void updateTrackData(ArrayList<SpotifyUtils.TrackItem> trackItems) {
         mTrackItems = trackItems;
         notifyDataSetChanged();
     }
@@ -66,7 +66,7 @@ public class TrackItemAdapter extends RecyclerView.Adapter<TrackItemAdapter.Trac
                 @Override
                 public void onClick(View v) {
                     String trackID = mTrackItems.get(getAdapterPosition()).ID;
-                    mOnSongItemClickListener.onPlaylistItemClick(playlisttrackID);
+                    mOnTrackItemClickListener.onTrackItemClick(trackID);
                     //get tracks in playlist
                 }
             });

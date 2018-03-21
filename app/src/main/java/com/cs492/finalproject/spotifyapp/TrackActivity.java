@@ -23,12 +23,12 @@ public class TrackActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<String>, TrackItemAdapter.OnTrackItemClickListener {
 
     private RecyclerView mTrackListRV;
-    private PlaylistItemAdapter mTrackItemAdapter;
+    private TrackItemAdapter mTrackItemAdapter;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
-                setContentView(R.layout.track_playlist);
+                setContentView(R.layout.activity_track);
                 mTrackListRV = (RecyclerView)findViewById(R.id.rv_track);
 
                 mTrackListRV.setLayoutManager(new LinearLayoutManager(this));
@@ -42,21 +42,21 @@ public class TrackActivity extends AppCompatActivity implements
 
                 Intent intent = getIntent();
                 String token = intent.getStringExtra("token");
-                String playlistID = intent.getStringExtra(SpotifyUtils.PlaylistItem.EXTRA_PLAYLIST_ITEM);
-                loadTracks(token, playlistID, true);
-                }
+                String trackURL = intent.getStringExtra(SpotifyUtils.TrackItem.EXTRA_TRACK_ITEM);
+                loadTracks(token, trackURL, true);
+        }
 
-        public void loadTracks(String token, String playlistID, boolean initialLoad) {
+        public void loadTracks(String token, String trackURL, boolean initialLoad) {
                 Bundle loaderArgs = new Bundle();
                 loaderArgs.putString("token", token);
-                loaderArgs.putString("playlistID", playlistID);
+                loaderArgs.putString("trackURL", trackURL);
                 LoaderManager loaderManager = getLoaderManager();
                 if (initialLoad) {
-                loaderManager.initLoader(1, loaderArgs, this);
+                loaderManager.initLoader(2, loaderArgs, this);
                 } else {
-                loaderManager.restartLoader(1, loaderArgs, this);
+                loaderManager.restartLoader(2, loaderArgs, this);
                 }
-                }
+        }
 
             /*
             * This for the http request stuff
@@ -66,37 +66,34 @@ public class TrackActivity extends AppCompatActivity implements
         @Override
         public Loader<String> onCreateLoader(int id, @Nullable Bundle args) {
                 String token = null;
-                String playlistID = null;
+                String trackURL = null;
                 if (args != null) {
                 token = args.getString("token");
-                playlistID  = args.getString("playlistID");
+                trackURL = args.getString("trackURL");
                 }
-                return new SpotifyPlaylistTask(this, token, playlistID);
+                return new SpotifyTrackTask(this, token, trackURL);
                 }
 
         @Override
         public void onLoadFinished(android.content.Loader<String> loader, String data) {
                 if (data != null) {
-                ArrayList<SpotifyUtils.TrackItem> trackItems = SpotifyUtils.parsePlaylistJSON(data);
-                mTrackItemAdapter.updateTrackData(trackItems, trackItems);
-                //GridView gridView = findViewById(R.id.gridview);
-                //mPlaylistItemAdapter = new PlaylistItemAdapter(this, playlistItems);
-                //gridView.setAdapter(mPlaylistItemAdapter);
+                ArrayList<SpotifyUtils.TrackItem> trackItems = SpotifyUtils.parseTrackJSON(data);
+                mTrackItemAdapter.updateTrackData(trackItems);
                 mTrackListRV.setVisibility(View.VISIBLE);
                 Log.d("TrackActivity", "Load finished!");
                 }
-                }
+        }
 
         @Override
         public void onLoaderReset(android.content.Loader<String> loader) {
 
-                }
+        }
 
         @Override
-        public void onPTrackItemClick(String trackID) {
+        public void onTrackItemClick(String trackID) {
                 Intent intent = new Intent(this, TrackActivity.class);
-                intent.putExtra(SpotifyUtils.PlaylistItem.EXTRA_PLAYLIST_ITEM, trackID);
+                intent.putExtra(SpotifyUtils.TrackItem.EXTRA_TRACK_ITEM, trackID);
                 this.startActivity(intent);
-                }
+        }
 
 }
