@@ -70,6 +70,7 @@ public class PlaylistItemAdapter extends RecyclerView.Adapter<PlaylistItemAdapte
                     String playlistID = mPlaylistItems.get(getAdapterPosition()).ID;
                     mOnPlaylistItemClickListener.onPlaylistItemClick(playlistID);
                     //get tracks in playlist
+
                 }
             });
         }
@@ -84,61 +85,3 @@ public class PlaylistItemAdapter extends RecyclerView.Adapter<PlaylistItemAdapte
         }
     }
 }
-
-    /*public PlaylistItemAdapter(Context context, ArrayList<SpotifyUtils.PlaylistItem> playlistItems){
-        this.mContext = context;
-        this.mPlaylistItems = playlistItems;
-    }
-
-    @Override
-    public int getCount() {
-        if (mPlaylistItems != null) {
-            return mPlaylistItems.size();
-        } else {
-            return 0;
-        }
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        final SpotifyUtils.PlaylistItem playlistItem = mPlaylistItems.get(position);
-        if (convertView == null) {
-            final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-            convertView = layoutInflater.inflate(R.layout.playlist_item, null);
-        }
-        final ImageView imageView = (ImageView)convertView.findViewById(R.id.imageButton);
-        final TextView nameTextView = (TextView)convertView.findViewById(R.id.name);
-
-
-        // 4
-        Ion.with(imageView)
-                .placeholder(R.drawable.sample_7)
-                .fitCenter()
-                .load(playlistItem.imageURL);
-        nameTextView.setText(playlistItem.name);
-
-        ImageButton imageButton = (ImageButton)convertView.findViewById(R.id.imageButton);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            //open playlist to show tracks (clicking tracks should open spotify directly)
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, PlaylistActivity.class);
-                intent.putExtra(SpotifyUtils.PlaylistItem.EXTRA_PLAYLIST_ITEM, playlistItem.ID);
-                mContext.startActivity(intent);
-            }
-        });
-
-
-        return convertView;
-    }
-} */

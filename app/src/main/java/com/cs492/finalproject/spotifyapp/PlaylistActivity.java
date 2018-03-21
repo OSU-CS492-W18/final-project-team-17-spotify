@@ -92,9 +92,9 @@ public class PlaylistActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onPlaylistItemClick(String playlistID) {
+    public void onPlaylistItemClick(String trackURL) {
         Intent intent = new Intent(this, PlaylistActivity.class);
-        intent.putExtra(SpotifyUtils.CategoryItem.EXTRA_CATEGORY_ITEM, playlistID);
+        intent.putExtra(SpotifyUtils.CategoryItem.EXTRA_CATEGORY_ITEM, trackURL);
         this.startActivity(intent);
     }
 }

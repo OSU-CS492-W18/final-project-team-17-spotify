@@ -64,10 +64,11 @@ public class SpotifyUtils {
     }
 
     public static class PlaylistItem implements  Serializable {
-      public static final String EXTRA_PLAYLIST_ITEM = "com.cs492.finalproject.spotifyapp";
+      //public static final String EXTRA_PLAYLIST_ITEM = "com.cs492.finalproject.spotifyapp";
       public String name;
       public String ID;
       public String imageURL;
+      public String tracksURL;
     }
 
     public static ArrayList<PlaylistItem> parsePlaylistJSON(String playlistJSON) {
@@ -83,6 +84,7 @@ public class SpotifyUtils {
                 playlistItem.name = playlistListElem.getString("name");
                 playlistItem.ID = playlistListElem.getString("id");
                 playlistItem.imageURL = playlistListElem.getJSONArray("images").getJSONObject(0).getString("url");
+                playlistItem.tracksURL = playlistListElem.getJSONObject("tracks").getString("href");
                 playlistItemsList.add(playlistItem);
             }
             return playlistItemsList;
