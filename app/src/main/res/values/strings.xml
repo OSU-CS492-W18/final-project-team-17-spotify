@@ -2,5 +2,6 @@
     <string name="app_name">Spotify App</string>
     <string name="action_settings">Settings</string>
     <string name="playlist_name">Playlists</string>
+    <string name="track_name">Tracks</string>
 
 </resources>
