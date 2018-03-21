@@ -23,6 +23,8 @@ public class PlaylistActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<String>, PlaylistItemAdapter.OnPlaylistItemClickListener {
     private RecyclerView mPlaylistListRV;
     private PlaylistItemAdapter mPlaylistItemAdapter;
+    private String mToken;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +42,9 @@ public class PlaylistActivity extends AppCompatActivity implements
                 DividerItemDecoration.VERTICAL));
 
         Intent intent = getIntent();
-        String token = intent.getStringExtra("token");
+        mToken = intent.getStringExtra("token");
         String categoryID = intent.getStringExtra(SpotifyUtils.CategoryItem.EXTRA_CATEGORY_ITEM);
-        loadPlaylists(token, categoryID, true);
+        loadPlaylists(mToken, categoryID, true);
     }
 
     public void loadPlaylists(String token, String categoryID, boolean initialLoad) {
@@ -92,9 +94,10 @@ public class PlaylistActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onPlaylistItemClick(String playlistID) {
-        Intent intent = new Intent(this, PlaylistActivity.class);
-        intent.putExtra(SpotifyUtils.CategoryItem.EXTRA_CATEGORY_ITEM, playlistID);
+    public void onPlaylistItemClick(String trackURL) {
+        Intent intent = new Intent(this, TrackActivity.class);
+        intent.putExtra("token", mToken);
+        intent.putExtra(SpotifyUtils.CategoryItem.EXTRA_CATEGORY_ITEM, trackURL);
         this.startActivity(intent);
     }
 }

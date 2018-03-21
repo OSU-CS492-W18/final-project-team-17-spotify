@@ -58,7 +58,7 @@ public class SpotifyUtils {
     }
 
     public static String buildPlaylistsUrl(String categoryID) {
-        return Uri.parse(SPOTIFY_BASE_URL + CATEGORY_URL +  categoryID + PLAYLIST_URL).buildUpon()
+        return Uri.parse(SPOTIFY_BASE_URL + CATEGORY_URL +  categoryID + PLAYLIST_URL  ).buildUpon()
                 .build()
                 .toString();
     }
@@ -68,6 +68,7 @@ public class SpotifyUtils {
       public String name;
       public String ID;
       public String imageURL;
+      public String tracksURL;
     }
 
     public static ArrayList<PlaylistItem> parsePlaylistJSON(String playlistJSON) {
@@ -83,6 +84,7 @@ public class SpotifyUtils {
                 playlistItem.name = playlistListElem.getString("name");
                 playlistItem.ID = playlistListElem.getString("id");
                 playlistItem.imageURL = playlistListElem.getJSONArray("images").getJSONObject(0).getString("url");
+                playlistItem.tracksURL = playlistListElem.getJSONObject("tracks").getString("href");
                 playlistItemsList.add(playlistItem);
             }
             return playlistItemsList;
@@ -95,4 +97,38 @@ public class SpotifyUtils {
         }
     }
 
+    public static String buildTrackUrl(String url) {
+        return Uri.parse(url).buildUpon()
+                .build()
+                .toString();
+    }
+
+    public static class TrackItem implements Serializable {
+        public static final String EXTRA_TRACK_ITEM = "com.cs492.finalproject.spotifyapp";
+        public String name;
+        public String ID;
+        public String imageURL;
+    }
+
+    public static ArrayList<TrackItem> parseTrackJSON(String trackJSON) {
+        try {
+            JSONObject trackObj = new JSONObject(trackJSON);
+            JSONArray trackList = trackObj.getJSONArray("items");
+
+            ArrayList<TrackItem> trackItemsList = new ArrayList<TrackItem>();
+            for (int i = 0; i < trackList.length(); i++) {
+                TrackItem trackItem = new TrackItem();
+                JSONObject trackListElem = trackList.getJSONObject(i);
+                trackItem.name = trackListElem.getJSONObject("track").getString("name");
+                trackItemsList.add(trackItem);
+            }
+            return trackItemsList;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
