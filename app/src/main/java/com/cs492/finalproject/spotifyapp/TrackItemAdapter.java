@@ -65,7 +65,7 @@ public class TrackItemAdapter extends RecyclerView.Adapter<TrackItemAdapter.Trac
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String trackID = mTrackItems.get(getAdapterPosition()).ID;
+                    String trackID = mTrackItems.get(getAdapterPosition()).URI;
                     mOnTrackItemClickListener.onTrackItemClick(trackID);
                     //get tracks in playlist
                 }
@@ -74,10 +74,6 @@ public class TrackItemAdapter extends RecyclerView.Adapter<TrackItemAdapter.Trac
 
         public void bind(SpotifyUtils.TrackItem trackItem) {
             mTrackTextView.setText(trackItem.name);
-            Ion.with(mTrackImageView)
-                    .placeholder(R.drawable.sample_7)
-                    .centerCrop()
-                    .load(trackItem.imageURL);
 
         }
     }
