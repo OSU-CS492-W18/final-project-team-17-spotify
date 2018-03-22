@@ -120,7 +120,7 @@ public class SpotifyUtils {
                 TrackItem trackItem = new TrackItem();
                 JSONObject trackListElem = trackList.getJSONObject(i);
                 trackItem.name = trackListElem.getJSONObject("track").getString("name");
-                trackItem.URI = trackListElem.getJSONObject("track").getString("URI");
+                trackItem.URI = trackListElem.getJSONObject("track").getString("uri");
                 trackItemsList.add(trackItem);
             }
             return trackItemsList;
