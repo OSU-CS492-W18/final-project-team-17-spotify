@@ -62,6 +62,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements
         SpotifyPlayer.NotificationCallback, ConnectionStateCallback, LoaderManager.LoaderCallbacks<String>,
         NavigationView.OnNavigationItemSelectedListener
+
 {
     // TODO: Replace with your client ID
     private static final String CLIENT_ID = "17fbced129bb41e7a78b0b58312905e1";
@@ -78,8 +79,10 @@ public class MainActivity extends AppCompatActivity implements
     private RecyclerView mTrackItemsRV;
     private TrackItemAdapter mTrackItemAdapter;
     private DrawerLayout mDrawerLayout;
+    private RecyclerView mFavoriteItemsRV;
     private ActionBarDrawerToggle mDrawerToggle;
 
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private SQLiteDatabase mDB;
 
@@ -103,6 +106,11 @@ public class MainActivity extends AppCompatActivity implements
         builder.setScopes(new String[]{"user-read-private", "streaming"});
         AuthenticationRequest request = builder.build();
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
+
+//        mFavoriteAdapter = new FavoriteAdapter(this, this);
+//        mFavoriteItemsRV.setAdapter(mFavoriteAdapter);
+//        mFavoriteItemsRV.setLayoutManager(new LinearLayoutManager(this));
+//        mFavoriteItemsRV.setHasFixedSize(true);
 
         FavoritesDBHelper dbHelper = new FavoritesDBHelper(this);
         mDB = dbHelper.getReadableDatabase();
@@ -176,12 +184,11 @@ public class MainActivity extends AppCompatActivity implements
                 FavoritesContract.FavoriteTracks.COLUMN_NAME + " DESC"
         );
 //        while (cursor.moveToNext()) {
-//            String location = cursor.getString(
+//            String favorite = cursor.getString(
 //                    cursor.getColumnIndex(FavoritesContract.FavoriteTracks.COLUMN_NAME)
 //            );
-//            TrackItemAdapter.Tra locationItem = new LocationAdapter.LocationItem();
-//            locationItem.location = location;
-//            mLocationAdapter.updateLocationItem(locationItem);
+//           cursor.close();
+//
 //        }
     }
 
@@ -276,4 +283,14 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
     }
+
+//    @Override
+//    public void onFavoriteItemClick(FavoriteAdapter.FavoriteItem favoriteItem) {
+//        Log.d(TAG, "loading favorite: " + favoriteItem.favorite);
+//        String favorite = favoriteItem.favorite;
+////        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+////        editor.putString(getString(R.string.pref_location_key), location);
+////        editor.apply();
+////        Log.d(TAG, "Preference updated");
+//    }
 }

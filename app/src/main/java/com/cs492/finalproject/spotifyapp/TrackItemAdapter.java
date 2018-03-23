@@ -1,13 +1,17 @@
 package com.cs492.finalproject.spotifyapp;
+import android.content.ContentValues;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.content.SharedPreferences;
 import com.koushikdutta.ion.Ion;
+import android.database.sqlite.SQLiteDatabase;
+
 
 import java.util.ArrayList;
 /**
@@ -18,10 +22,11 @@ public class TrackItemAdapter extends RecyclerView.Adapter<TrackItemAdapter.Trac
 
     private ArrayList<SpotifyUtils.TrackItem> mTrackItems;
     private OnTrackItemClickListener mOnTrackItemClickListener;
+    private SQLiteDatabase mDB;
 
-
-    public TrackItemAdapter(OnTrackItemClickListener onTrackItemClickListener) {
+    public TrackItemAdapter(OnTrackItemClickListener onTrackItemClickListener, SQLiteDatabase db) {
         mOnTrackItemClickListener = onTrackItemClickListener;
+        mDB = db;
     }
 
     public void updateTrackData(ArrayList<SpotifyUtils.TrackItem> trackItems) {
@@ -66,9 +71,21 @@ public class TrackItemAdapter extends RecyclerView.Adapter<TrackItemAdapter.Trac
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    if ( v.isActivated() ) {
+                        mTrackImageView.setImageResource(R.drawable.ic_favorite_black_24dp);
+                        ContentValues row = new ContentValues();
+                        row.put(FavoritesContract.FavoriteTracks.COLUMN_NAME, mTrackItems.get(getAdapterPosition()).name);
+                        String[] arg = { mTrackItems.get(getAdapterPosition()).name };
+                        mDB.delete(FavoritesContract.FavoriteTracks.TABLE_NAME, FavoritesContract.FavoriteTracks.COLUMN_NAME + " = ?", arg);
+                        v.setActivated(false);
+                    } else {
 //                    String trackID = mTrackItems.get(getAdapterPosition()).URI;
-                    mTrackImageView.setImageResource(R.drawable.ic_favorite_black_24dp);
+                        mTrackImageView.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                        ContentValues row = new ContentValues();
+                        row.put(FavoritesContract.FavoriteTracks.COLUMN_NAME, mTrackItems.get(getAdapterPosition()).name);
+                        mDB.insert(FavoritesContract.FavoriteTracks.TABLE_NAME, null, row);
+                        v.setActivated(true);
+                    }
 //                    mOnTrackItemClickListener.onTrackItemClick(trackID);
                     //get tracks in playlist
                 }
