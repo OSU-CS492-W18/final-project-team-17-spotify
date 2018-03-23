@@ -7,6 +7,7 @@ package com.cs492.finalproject.spotifyapp;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,7 +32,7 @@ public class TrackActivity extends AppCompatActivity implements
 
     private RecyclerView mTrackListRV;
     private TrackItemAdapter mTrackItemAdapter;
-    private Player mPlayer;
+    private SQLiteDatabase mDB;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +43,15 @@ public class TrackActivity extends AppCompatActivity implements
                 mTrackListRV.setLayoutManager(new LinearLayoutManager(this));
                 mTrackListRV.setHasFixedSize(true);
 
-                mTrackItemAdapter = new TrackItemAdapter(this);
+                FavoritesDBHelper dbHelper = new FavoritesDBHelper(this);
+                mDB = dbHelper.getReadableDatabase();
+
+                mTrackItemAdapter = new TrackItemAdapter(this, mDB);
                 mTrackListRV.setAdapter(mTrackItemAdapter);
 
                 mTrackListRV.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
+
 
                 Intent intent = getIntent();
                 String token = intent.getStringExtra("token");
@@ -99,7 +104,7 @@ public class TrackActivity extends AppCompatActivity implements
 
         @Override
         public void onTrackItemClick(String trackID) {
-            mPlayer.playUri(null, "spotify:track:43ZyHQITOjhciSUUNPVRHc", 0, 0);
+ //           mPlayer.playUri(null, "spotify:track:43ZyHQITOjhciSUUNPVRHc", 0, 0);
 //                Intent intent = new Intent(this, TrackActivity.class);
 //                intent.putExtra(SpotifyUtils.TrackItem.EXTRA_TRACK_ITEM, trackID);
 //                this.startActivity(intent);
