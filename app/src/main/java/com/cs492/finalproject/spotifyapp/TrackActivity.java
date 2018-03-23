@@ -17,6 +17,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.spotify.sdk.android.authentication.AuthenticationClient;
+import com.spotify.sdk.android.authentication.AuthenticationResponse;
+import com.spotify.sdk.android.player.Config;
+import com.spotify.sdk.android.player.Player;
+import com.spotify.sdk.android.player.Spotify;
+import com.spotify.sdk.android.player.SpotifyPlayer;
+
 import java.util.ArrayList;
 
 public class TrackActivity extends AppCompatActivity implements
@@ -24,6 +31,7 @@ public class TrackActivity extends AppCompatActivity implements
 
     private RecyclerView mTrackListRV;
     private TrackItemAdapter mTrackItemAdapter;
+    private Player mPlayer;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -91,9 +99,10 @@ public class TrackActivity extends AppCompatActivity implements
 
         @Override
         public void onTrackItemClick(String trackID) {
-                Intent intent = new Intent(this, TrackActivity.class);
-                intent.putExtra(SpotifyUtils.TrackItem.EXTRA_TRACK_ITEM, trackID);
-                this.startActivity(intent);
+            mPlayer.playUri(null, "spotify:track:43ZyHQITOjhciSUUNPVRHc", 0, 0);
+//                Intent intent = new Intent(this, TrackActivity.class);
+//                intent.putExtra(SpotifyUtils.TrackItem.EXTRA_TRACK_ITEM, trackID);
+//                this.startActivity(intent);
         }
 
 }

@@ -25,6 +25,10 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity android:name=".PlaylistActivity" android:label="@string/playlist_name"/>
         <activity android:name=".TrackActivity" android:label="@string/track_name"/>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
