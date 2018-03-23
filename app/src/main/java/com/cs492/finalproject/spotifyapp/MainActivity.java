@@ -12,6 +12,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.design.widget.NavigationView;
+
 
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -24,7 +28,10 @@ import com.spotify.sdk.android.player.PlayerEvent;
 import com.spotify.sdk.android.player.Spotify;
 import com.spotify.sdk.android.player.SpotifyPlayer;
 
+
 import java.util.ArrayList;
+
+
 
 public class MainActivity extends Activity implements
         SpotifyPlayer.NotificationCallback, ConnectionStateCallback, LoaderManager.LoaderCallbacks<String>
@@ -42,6 +49,11 @@ public class MainActivity extends Activity implements
     private CategoryItemAdapter mCategoryItemAdapter;
     private String mToken;
 
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +65,8 @@ public class MainActivity extends Activity implements
         builder.setScopes(new String[]{"user-read-private", "streaming"});
         AuthenticationRequest request = builder.build();
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
+
+
     }
 
     public void loadCategories(String token, boolean initialLoad) {
