@@ -60,8 +60,9 @@ public class CategoryItemAdapter extends BaseAdapter {
 
         Ion.with(imageView)
                 .placeholder(R.drawable.sample_7)
-                .fitCenter()
                 .load(categoryItem.imageURL);
+        imageView.setAdjustViewBounds(true);
+        imageView.setPadding(1, 1, 1, 1);
         nameTextView.setText(categoryItem.name);
 
         ImageButton imageButton = (ImageButton)convertView.findViewById(R.id.imageButton);

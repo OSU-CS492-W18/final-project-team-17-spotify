@@ -24,13 +24,14 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="19dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="24dp"
             android:layout_weight="2"
             android:text="dog"
             android:textAlignment="center"
             android:textColor="@android:color/background_light"
             app:layout_constraintBottom_toBottomOf="@+id/imageButton"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="dog" />
     </android.support.constraint.ConstraintLayout>

@@ -1,4 +1,5 @@
 package com.cs492.finalproject.spotifyapp;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,8 +66,10 @@ public class TrackItemAdapter extends RecyclerView.Adapter<TrackItemAdapter.Trac
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String trackID = mTrackItems.get(getAdapterPosition()).ID;
-                    mOnTrackItemClickListener.onTrackItemClick(trackID);
+
+//                    String trackID = mTrackItems.get(getAdapterPosition()).URI;
+                    mTrackImageView.setImageResource(R.drawable.ic_favorite_black_24dp);
+//                    mOnTrackItemClickListener.onTrackItemClick(trackID);
                     //get tracks in playlist
                 }
             });
@@ -74,10 +77,7 @@ public class TrackItemAdapter extends RecyclerView.Adapter<TrackItemAdapter.Trac
 
         public void bind(SpotifyUtils.TrackItem trackItem) {
             mTrackTextView.setText(trackItem.name);
-            Ion.with(mTrackImageView)
-                    .placeholder(R.drawable.sample_7)
-                    .centerCrop()
-                    .load(trackItem.imageURL);
+            mTrackImageView.setImageResource(R.drawable.ic_favorite_border_black_24dp);
 
         }
     }

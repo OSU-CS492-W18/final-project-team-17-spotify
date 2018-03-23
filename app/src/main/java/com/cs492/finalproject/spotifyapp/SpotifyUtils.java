@@ -21,6 +21,7 @@ public class SpotifyUtils {
 
     public static String buildCategoryUrl() {
         return Uri.parse(SPOTIFY_BASE_URL + CATEGORY_URL).buildUpon()
+                .appendQueryParameter("limit", "30")
                 .build()
                 .toString();
     }
@@ -106,8 +107,7 @@ public class SpotifyUtils {
     public static class TrackItem implements Serializable {
         public static final String EXTRA_TRACK_ITEM = "com.cs492.finalproject.spotifyapp";
         public String name;
-        public String ID;
-        public String imageURL;
+        public String URI;
     }
 
     public static ArrayList<TrackItem> parseTrackJSON(String trackJSON) {
@@ -120,6 +120,7 @@ public class SpotifyUtils {
                 TrackItem trackItem = new TrackItem();
                 JSONObject trackListElem = trackList.getJSONObject(i);
                 trackItem.name = trackListElem.getJSONObject("track").getString("name");
+                trackItem.URI = trackListElem.getJSONObject("track").getString("uri");
                 trackItemsList.add(trackItem);
             }
             return trackItemsList;

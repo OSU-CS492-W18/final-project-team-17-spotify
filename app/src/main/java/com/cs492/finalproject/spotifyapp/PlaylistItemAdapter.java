@@ -79,9 +79,7 @@ public class PlaylistItemAdapter extends RecyclerView.Adapter<PlaylistItemAdapte
             mPlaylistTextView.setText(playlistItem.name);
             Ion.with(mPlaylistImageView)
                     .placeholder(R.drawable.sample_7)
-                    .centerCrop()
                     .load(playlistItem.imageURL);
-
         }
     }
 }
