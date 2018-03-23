@@ -66,9 +66,10 @@ public class TrackItemAdapter extends RecyclerView.Adapter<TrackItemAdapter.Trac
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String trackID = mTrackItems.get(getAdapterPosition()).ID;
+
+//                    String trackID = mTrackItems.get(getAdapterPosition()).URI;
                     mTrackImageView.setImageResource(R.drawable.ic_favorite_black_24dp);
-                    mOnTrackItemClickListener.onTrackItemClick(trackID);
+//                    mOnTrackItemClickListener.onTrackItemClick(trackID);
                     //get tracks in playlist
                 }
             });

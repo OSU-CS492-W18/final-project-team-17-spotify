@@ -22,7 +22,7 @@ public class FavoritesDBHelper extends SQLiteOpenHelper {
             final String SQL_CREATE_FAVORITES_TABLE =
                     "CREATE TABLE " + FavoritesContract.FavoriteTracks.TABLE_NAME + "(" +
                             FavoritesContract.FavoriteTracks._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                            FavoritesContract.FavoriteTracks.COLUMN_NAME + " TEXT NOT NULL, " +
+                            FavoritesContract.FavoriteTracks.COLUMN_NAME + " TEXT NOT NULL " +
                             ");";
             db.execSQL(SQL_CREATE_FAVORITES_TABLE);
         }
